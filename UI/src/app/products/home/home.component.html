@@ -1,0 +1,53 @@
+<div class="main-content">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <div class="row">
+
+        <div *ngFor="let tempProd of products" class="col-md-3">
+          <div class="product-box">
+            <a routerLink="/products/{{tempProd.id}}">
+              <img src="{{ tempProd.imageUrl }}" class="img-responsive"/>
+            </a>
+            <a routerLink="/products/{{tempProd.id}}">
+              <h1>{{ tempProd.name}}</h1>
+            </a>
+            <div class="price">{{ tempProd.unitPrice | currency:"INR"}}</div>
+            <a href="#" class="primary-btn">Add to cart</a>
+          </div>
+        </div>
+
+        <div *ngIf="products?.length === 0" class="alert alert-warning col-md-12" role="alert">
+          No products found.
+        </div>
+      </div>
+
+      <!-- Pagination area - Start -->
+
+      <div class="footer-pagination">
+        <div class="row">
+          <div class="col-md-6"></div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-9" style="padding-left: 30%">     
+                <pagination [(ngModel)]="pageNumber" [itemsPerPage]="pageSize"
+                  [totalItems]="totalProducts" (pageChanged)="pageChange($event);listProducts()">
+
+                </pagination>           
+              </div>
+              <div class="col-md-3 mt-2" style="text-align: right;">
+                  <span class="mr-2">Page Size</span>
+                  <select [(ngModel)]="ddPageSize" (change)="pageSizeChange()">
+                    <option selected value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                  </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Pagination area - End -->
+    </div>
+  </div>
+</div>
