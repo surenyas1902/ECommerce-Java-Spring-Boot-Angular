@@ -12,6 +12,7 @@ import { SearchComponent } from './products/search/search.component';
 import { DetailsComponent } from './products/details/details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { CartStatusComponent } from './products/cart-status/cart-status.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     HomeComponent,
     MenuComponent,
     SearchComponent,
-    DetailsComponent
+    DetailsComponent,
+    CartStatusComponent
   ],
   imports: [
     BrowserModule,

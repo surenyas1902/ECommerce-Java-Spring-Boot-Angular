@@ -10,8 +10,6 @@ import { ProductCategory } from '../common/product-category';
 })
 export class ProductService {
   
-  
-
   private baseUrl = 'http://localhost:8080/api/products';
   private categoryUrl = 'http://localhost:8080/api/product-category';
   
@@ -28,9 +26,9 @@ export class ProductService {
     );
   }
 
-  searchProducts(keyword: string | null) : Observable<Product[]> {
-    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${keyword}`;
-    return this.getProducts(searchUrl);
+  searchProducts(pageNumber: number, pageSize: number, keyword: string | null) : Observable<GetResponseProducts> {
+    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${keyword}&page=${pageNumber}&size=${pageSize}`;
+    return this.http.get<GetResponseProducts>(searchUrl);
   }
 
   private getProducts(searchUrl: string): Observable<Product[]> {
@@ -60,5 +58,11 @@ interface GetResponseProducts {
 interface GetResponseProductCategory {
   _embedded: {
     productCategory: ProductCategory[]
+  },
+  page: {
+    size: number,
+    totalElements: number,
+    totalPages: number,
+    number: number
   }
 }

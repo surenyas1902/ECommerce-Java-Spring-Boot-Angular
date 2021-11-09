@@ -17,9 +17,12 @@ export class HomeComponent implements OnInit {
   previousCategoryId: number = 1;
 
   pageNumber: number = 1;
-  pageSize: number = 10;
-  totalProducts: number = 0;
   ddPageSize: number = 5;
+  pageSize: number = this.ddPageSize;
+  totalProducts: number = 0;
+
+  previousKeyword: string | null = ""; 
+  
 
   constructor(private productService: ProductService, private route: ActivatedRoute) { }
 
@@ -39,8 +42,18 @@ export class HomeComponent implements OnInit {
 
   searchProducts() {
     const keyword = this.route.snapshot.paramMap.get('keyword');
+    if (this.previousKeyword != keyword) {
+      this.pageNumber = 1;
+    }
 
-    this.productService.searchProducts(keyword).subscribe(data => this.products = data);
+    this.previousKeyword = keyword;
+    this.productService.searchProducts(this.pageNumber - 1, this.pageSize, keyword)
+    .subscribe(data => {
+      this.products = data._embedded.products;
+      this.pageNumber = data.page.number + 1;
+      this.pageSize = data.page.size;
+      this.totalProducts = data.page.totalElements;
+    });
   }
 
   listProducts() {
@@ -75,6 +88,11 @@ export class HomeComponent implements OnInit {
 
   pageSizeChange() {
     this.pageSize = this.ddPageSize;
-    this.listProducts();
+    this.pageNumber = 1;
+    this.showProducts();
+  }
+
+  addToCart(product: Product) {
+    console.log(`Adding to Cart: ${product.name}, ${product.unitPrice}`);
   }
 }
