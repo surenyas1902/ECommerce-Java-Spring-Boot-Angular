@@ -13,6 +13,7 @@ import { DetailsComponent } from './products/details/details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { CartStatusComponent } from './products/cart-status/cart-status.component';
+import { CartDetailsComponent } from './products/cart-details/cart-details.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CartStatusComponent } from './products/cart-status/cart-status.componen
     MenuComponent,
     SearchComponent,
     DetailsComponent,
-    CartStatusComponent
+    CartStatusComponent,
+    CartDetailsComponent
   ],
   imports: [
     BrowserModule,

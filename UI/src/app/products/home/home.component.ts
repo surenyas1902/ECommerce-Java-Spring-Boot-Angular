@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+import { CartItem } from 'src/app/common/cart-item';
 import { Product } from 'src/app/common/product';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -24,7 +26,9 @@ export class HomeComponent implements OnInit {
   previousKeyword: string | null = ""; 
   
 
-  constructor(private productService: ProductService, private route: ActivatedRoute) { }
+  constructor(private productService: ProductService, 
+    private route: ActivatedRoute, 
+    private cartService: CartService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => this.showProducts());
@@ -94,5 +98,10 @@ export class HomeComponent implements OnInit {
 
   addToCart(product: Product) {
     console.log(`Adding to Cart: ${product.name}, ${product.unitPrice}`);
+    
+    const theCartItem = new CartItem();
+    theCartItem.addProduct(product);
+
+    this.cartService.addToCart(theCartItem);
   }
 }
