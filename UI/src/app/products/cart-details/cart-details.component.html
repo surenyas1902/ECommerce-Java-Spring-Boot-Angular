@@ -52,6 +52,7 @@
                                 <p>Shipping: {{totalPrice > 100 ? 'Free' : '5 extra'}}</p>
                                 <p>Total Price: {{totalPrice > 100 ? totalPrice : totalPrice + 5 | currency: 'INR'}}
                                 </p>
+                                <a routerLink="/checkout" class="btn btn-primary">Checkout</a>
                             </td>
                         </tr>
 

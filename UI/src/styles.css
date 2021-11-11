@@ -10,7 +10,8 @@
   padding:0;
   -webkit-box-sizing:border-box;
   -moz-box-sizing:border-box;
-  box-sizing:border-box
+  box-sizing:border-box;
+  scroll-behavior: smooth;
 }
 
 body{
@@ -516,7 +517,7 @@ input.au-input.au-input-xl{
   background:#fff
 }
 .main-content.page-m{
-  padding:10% 15%!important
+  padding:10% 30% 10% 5%;
 }
 
 /*
