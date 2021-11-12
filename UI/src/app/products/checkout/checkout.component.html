@@ -44,7 +44,8 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <select formControlName="country">
-                                    <option value="">To Do</option>
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let country of countries" [ngValue]="country.code">{{country.name}}</option>
                                 </select>
                             </div>
                         </div>
@@ -73,7 +74,8 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <select formControlName="state">
-                                    <option value="">To Do</option>
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let state of states" [ngValue]="state.id">{{state.name}}</option>
                                 </select>
                             </div>
                         </div>
@@ -200,7 +202,7 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <select formControlName="expirationMonth">
-                                    <option value=""></option>
+                                    <option *ngFor="let month of months" [value]="month">{{month}}</option>
                                 </select>
                             </div>
                         </div>
@@ -210,9 +212,8 @@
                         <div class="col-md-2"><label for="">Expiry Year</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
-                                <select formControlName="expirationMonth">
-                                    <option value="Visa">Visa</option>
-                                    <option value="Mastercard">Mastercard</option>
+                                <select formControlName="expirationYear" (change)="changeYear()">
+                                    <option *ngFor="let year of years" [value]="year">{{year}}</option>
                                 </select>
                             </div>
                         </div>

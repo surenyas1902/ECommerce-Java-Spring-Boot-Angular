@@ -15,6 +15,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { CartStatusComponent } from './products/cart-status/cart-status.component';
 import { CartDetailsComponent } from './products/cart-details/cart-details.component';
 import { CheckoutComponent } from './products/checkout/checkout.component';
+import { ShopFormServiceService } from './services/shop-form-service.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { CheckoutComponent } from './products/checkout/checkout.component';
     BrowserAnimationsModule,
     PaginationModule.forRoot()
   ],
-  providers: [ ProductService ],
+  providers: [ ProductService, ShopFormServiceService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

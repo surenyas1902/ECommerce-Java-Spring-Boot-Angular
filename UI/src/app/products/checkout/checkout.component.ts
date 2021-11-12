@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Country } from 'src/app/common/country';
 import { Info } from 'src/app/common/info';
+import { State } from 'src/app/common/state';
+import { ShopFormServiceService } from 'src/app/services/shop-form-service.service';
 
 @Component({
   selector: 'app-checkout',
@@ -14,9 +17,24 @@ export class CheckoutComponent implements OnInit {
   totalPrice: number = 0.00;
   totalQuantity: number = 0;
 
-  constructor(private formBuilder: FormBuilder) { }
+  years: number[] = [];
+  months: number[] = [];
+  countries: Array<Country> = new Array<Country>();
+  states: Array<State> = new Array<State>();
+
+  constructor(private formBuilder: FormBuilder,
+    private shopFormService: ShopFormServiceService) { }
 
   ngOnInit(): void {
+    this.initializeForm();
+    this.shopFormService.getCountries().subscribe(data => this.countries = data);
+    this.shopFormService.getStates("IN").subscribe(data => this.states = data);
+  }
+
+  initializeForm() {
+    const startMonth: number = new Date().getMonth() + 1;
+    const startYear: number = new Date().getFullYear();
+
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
         firstName: [''],
@@ -38,14 +56,18 @@ export class CheckoutComponent implements OnInit {
         zipcode: [''],
       }),
       creditCard: this.formBuilder.group({
-        cardType: [''],
+        cardType: ['Visa'],
         nameOnCard: [''],
         cardNumber: [''],
         securityCode: [''],
-        expirationMonth: [''],
-        expirationYear: [''],
+        expirationMonth: [startMonth],
+        expirationYear: [startYear],
       }),
-    })
+    });
+
+    
+    this.shopFormService.getCreditCardMonths(startMonth).subscribe(data => this.months = data);
+    this.shopFormService.getCreditCardYears().subscribe(data => this.years = data);
   }
 
   onSubmit() {
@@ -63,6 +85,16 @@ export class CheckoutComponent implements OnInit {
     else {
       this.checkoutFormGroup.controls.billingAddress.reset();
     }
+  }
+
+  changeYear() {
+    const selectedYear = this.checkoutFormGroup.get('creditCard')?.value.expirationYear;
+    const currentYear = new Date().getFullYear();
+    let startMonth = new Date().getMonth() + 1;
+    if (selectedYear > currentYear) {
+      startMonth = 1;
+    }
+    this.shopFormService.getCreditCardMonths(startMonth).subscribe(data => this.months = data);
   }
 
 }

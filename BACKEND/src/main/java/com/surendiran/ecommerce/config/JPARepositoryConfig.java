@@ -1,7 +1,9 @@
 package com.surendiran.ecommerce.config;
 
+import com.surendiran.ecommerce.entity.Country;
 import com.surendiran.ecommerce.entity.Product;
 import com.surendiran.ecommerce.entity.ProductCategory;
+import com.surendiran.ecommerce.entity.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -27,18 +29,19 @@ public class JPARepositoryConfig implements RepositoryRestConfigurer {
 
         HttpMethod[] unsupportedActions = { HttpMethod.PUT, HttpMethod.DELETE, HttpMethod.POST};
 
-        config.getExposureConfiguration()
-                .forDomainType(Product.class)
-                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedActions)))
-                .withCollectionExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedActions)));
-
-        config.getExposureConfiguration()
-                .forDomainType(ProductCategory.class)
-                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedActions)))
-                .withCollectionExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedActions)));
-
+        Class[] classes = { Product.class, ProductCategory.class, Country.class, State.class};
+        for(Class theClass : classes) {
+            disableHttpMethods(theClass, config, unsupportedActions);
+        }
         // call an internal helper method to expose Id's
         exposeIds(config);
+    }
+
+    private void disableHttpMethods(Class reqClass, RepositoryRestConfiguration config, HttpMethod[] unsupportedActions) {
+        config.getExposureConfiguration()
+                .forDomainType(reqClass)
+                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedActions)))
+                .withCollectionExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedActions)));
     }
 
     private void exposeIds(RepositoryRestConfiguration config) {
