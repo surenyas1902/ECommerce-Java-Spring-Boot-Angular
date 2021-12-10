@@ -16,6 +16,7 @@ import { CartStatusComponent } from './products/cart-status/cart-status.componen
 import { CartDetailsComponent } from './products/cart-details/cart-details.component';
 import { CheckoutComponent } from './products/checkout/checkout.component';
 import { ShopFormServiceService } from './services/shop-form-service.service';
+import { CheckoutService } from './services/checkout.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { ShopFormServiceService } from './services/shop-form-service.service';
     BrowserAnimationsModule,
     PaginationModule.forRoot()
   ],
-  providers: [ ProductService, ShopFormServiceService ],
+  providers: [ ProductService, ShopFormServiceService, CheckoutService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

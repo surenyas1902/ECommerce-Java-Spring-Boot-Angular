@@ -28,7 +28,7 @@ public class Order {
     private BigDecimal totalPrice;
 
     @Column(name = "total_quantity")
-    private int quantity;
+    private int totalQuantity;
 
     @Column(name = "status")
     private String status;
